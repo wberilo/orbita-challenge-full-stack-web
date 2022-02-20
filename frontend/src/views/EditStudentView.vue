@@ -1,9 +1,10 @@
 <template>
-  <div class="home">
+  <div class="home" style="display:flex">
+    <NavigationMenu />
     <div v-if="isloading">
       <v-progress-circular indeterminate color="primary" class="mb-4" />
     </div>
-    <div v-else>
+    <div v-else style="display:contents">
       <StudentForm
         :cpfEditable="false"
         :emailEditable="true"
@@ -20,6 +21,7 @@
 import Vue from "vue";
 import StudentForm from "@/components/StudentForm.vue";
 import { updateStudent, getStudentByRa } from "@/util/services/StudentService";
+import NavigationMenu from "@/components/NavigationMenu.vue";
 
 export default Vue.extend({
   name: "CreateStudentView",
@@ -39,6 +41,7 @@ export default Vue.extend({
   },
   components: {
     StudentForm,
+    NavigationMenu,
   },
   methods: {
     updateStudent,

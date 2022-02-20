@@ -1,5 +1,5 @@
 <template>
-  <div>
+<div style="width: -webkit-fill-available; margin: 20px">
     <v-form v-model="isFormValid">
       <v-text-field
         label="Nome"

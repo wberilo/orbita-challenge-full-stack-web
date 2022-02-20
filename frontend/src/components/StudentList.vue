@@ -1,4 +1,5 @@
 <template>
+<div style="width: -webkit-fill-available; margin: 20px">
   <v-data-table
     :headers="headers"
     :items="students"
@@ -7,10 +8,11 @@
     class="elevation-1"
   >
   <template v-slot:[`item.actions`]="{ item }">
-      <v-btn @click="()=>{updatePropsMethod(item.ra).then(r => method())}" >Deletar</v-btn>
+      <v-btn @click="()=>{deleteStudent(item.ra).then(r => updatePropsMethod())}" >Deletar</v-btn>
       <v-btn @click="$router.push(EDIT_STUDENT_ROUTER(item.ra))">Editar</v-btn>
     </template>
   </v-data-table>
+</div>
 </template>
 
 <script lang="ts">
@@ -27,7 +29,6 @@ export default Vue.extend({
   props: {
     students: {
       type: Array,
-      default: () => [],
     },
     updatePropsMethod: Function,
     loaded : {
@@ -43,11 +44,6 @@ export default Vue.extend({
       { text: "CPF", value: "cpf" },
       { text: "Ações", value: "actions" },
     ],
-    email: "",
-    name: "",
-    ra: "",
-    cpf: "",
-    isFormValid: false,
   }),
 });
 </script>

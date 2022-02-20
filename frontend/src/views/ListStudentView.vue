@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="home" style="display:flex">
+    <NavigationMenu />
     <StudentList :loaded="loaded" :students="students" :updatePropsMethod="updateStudents"/>
   </div>
 </template>
@@ -7,11 +8,13 @@
 <script lang="ts">
 import Vue from "vue";
 import StudentList from '@/components/StudentList.vue';
+import NavigationMenu from '@/components/NavigationMenu.vue';
 import { getAllStudents } from "@/util/services/StudentService";
 export default Vue.extend({
   name: "StudentForm",
   components: {
     StudentList,
+    NavigationMenu
   },
   methods: {
     updateStudents: async function updateStudents() {
