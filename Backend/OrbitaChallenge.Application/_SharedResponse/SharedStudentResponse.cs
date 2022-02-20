@@ -1,11 +1,16 @@
 ﻿using OrbitaChallenge.Domain.StudentAggregate;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace OrbitaChallenge.Application.Commands.CreateStudent
+namespace OrbitaChallenge.Application._SharedResponse
 {
-    public class CreateStudentCommandResult
+    public class SharedStudentResponse
     {
-        public CreateStudentCommandResult() { }
-        public CreateStudentCommandResult(Student student)
+        public SharedStudentResponse() { }
+        public SharedStudentResponse(Student student)
         {
             Nome = student.Nome;
             Email = student.Email;

@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using OrbitaChallenge.Infra;
 
 namespace OrbitaChallenge.Application.Commands.CreateStudent
 {
-    public class CreateStudentCommandInputValidator : AbstractValidator<CreateStudentCommandInput>
+    public class CreateStudentCommandValidator : AbstractValidator<CreateStudentCommandInput>
     {
-        public CreateStudentCommandInputValidator()
+        public CreateStudentCommandValidator(Context context)
         {
 
             RuleFor(student => student.CPF).NotEmpty();
@@ -19,6 +20,15 @@ namespace OrbitaChallenge.Application.Commands.CreateStudent
             RuleFor(student => student.RA).NotEmpty();
             //  Regex: Match a number only string accepts numbers
             RuleFor(student => student.RA).Matches("^[0-9]*$");
+
+
+            RuleFor(x => x.RA).Must(RA =>
+            {
+                var student = context.Students.Find(RA);
+                if (student is null) return true;
+                return false;
+            }).WithMessage("RA já existe").WithErrorCode("AlreadyExists");
+
         }
     }
 }

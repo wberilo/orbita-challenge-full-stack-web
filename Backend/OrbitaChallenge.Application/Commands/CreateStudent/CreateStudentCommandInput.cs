@@ -1,8 +1,9 @@
 ﻿using MediatR;
+using OrbitaChallenge.Application._SharedResponse;
 
 namespace OrbitaChallenge.Application.Commands.CreateStudent
 {
-    public class CreateStudentCommandInput: IRequest<CreateStudentCommandResult>
+    public class CreateStudentCommandInput: IRequest<SharedStudentResponse>
     {
         public CreateStudentCommandInput(string nome, string email, string rA, string cPF)
         {
