@@ -6,8 +6,8 @@
         :rules="nomeRules"
         append-icon="mdi-account-circle"
         :disabled="!nameEditable"
-        :value="student.name"
-        v-model="name"
+        :value="student.nome"
+        v-model="nome"
       />
       <v-text-field
         label="Email"
@@ -34,16 +34,23 @@
         v-model="ra"
       />
     </v-form>
-    <v-btn>Cancelar</v-btn>
-    <v-btn @click="method({email, cpf, ra, name})" :disabled="!isFormValid" >Salvar</v-btn>
+    <v-btn @click="$router.push(STUDENT_ROUTER())">Cancelar</v-btn>
+    <v-btn @click="method({email, cpf, ra, nome}).then(r => $router.push(STUDENT_ROUTER()))" :disabled="!isFormValid" >Salvar</v-btn>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import {STUDENT_ROUTER} from "@/router/routes";
 
 export default Vue.extend({
   name: "StudentForm",
+  mounted() {
+    this.email = this.student.email;
+    this.cpf = this.student.cpf;
+    this.ra = this.student.ra;
+    this.nome = this.student.nome;
+  },
   props: {
     method: Function,
     nameEditable: {
@@ -65,17 +72,20 @@ export default Vue.extend({
     student: {
       type: Object,
       default: () => ({
-        name: "",
         email: "",
-        ra: "",
         cpf: "",
+        ra: "",
+        nome: "",
       }),
     },
+  },
+  methods: {
+    STUDENT_ROUTER
   },
 
   data: () => ({
     email: "",
-    name: "",
+    nome: "",
     ra: "",
     cpf: "",
     isFormValid: false,
