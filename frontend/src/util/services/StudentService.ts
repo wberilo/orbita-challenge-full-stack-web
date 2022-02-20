@@ -1,21 +1,14 @@
 import { Student } from '@/util/SharedTypes/StudentType'
 import axios from 'axios'
+const baseUrl = process.env.ORBITA_API_URL || 'https://localhost:5001'
+const STUDENT_ROUTE = `${baseUrl}/students`
 
-const STUDENT_ROUTE = `${process.env.ORBITA_API_URL}/students`
-
-type getAllStudentsParams = {
-  search?: string
-}
-export const getAllStudents = async (params: getAllStudentsParams):Promise<[Student]> => {
-  const response = await axios.get(STUDENT_ROUTE, {
-    params: {
-      search: params.search
-    }
-  })
-  return response.data
+export const getAllStudents = async ():Promise<[Student]> => {
+  const response = await axios.get(STUDENT_ROUTE)
+  return response.data.items
 }
 
-export const getStudentByRa = async (ra:number):Promise<Student> => {
+export const getStudentByRa = async (ra:string):Promise<Student> => {
   const response = await axios.get(`${STUDENT_ROUTE}/${ra}`)
   return response.data
 }
@@ -30,7 +23,7 @@ export const updateStudent = async (student: Student) => {
   return response.data
 }
 
-export const deleteStudent = async (student: Student) => {
-  const response = await axios.delete(`${STUDENT_ROUTE}/${student.ra}`)
+export const deleteStudent = async (ra: string) => {
+  const response = await axios.delete(`${STUDENT_ROUTE}/${ra}`)
   return response.data
 }

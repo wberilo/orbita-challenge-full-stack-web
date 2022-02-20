@@ -3,11 +3,11 @@
     :headers="headers"
     :items="students"
     :items-per-page="5"
-    loading="true"
+    :loading="!loaded"
     class="elevation-1"
   >
   <template v-slot:[`item.actions`]="{ item }">
-      <v-btn @click="deleteStudent(item)" :disabled="!isFormValid" >Deletar</v-btn>
+      <v-btn @click="()=>{updatePropsMethod(item.ra).then(r => method())}" >Deletar</v-btn>
       <v-btn @click="$router.push(EDIT_STUDENT_ROUTER(item.ra))">Editar</v-btn>
     </template>
   </v-data-table>
@@ -27,21 +27,19 @@ export default Vue.extend({
   props: {
     students: {
       type: Array,
-      default: () => [
-        {
-          name: "cronf",
-          email: "crong",
-          ra: "c",
-          cpf: "c",
-        },
-      ],
+      default: () => [],
+    },
+    updatePropsMethod: Function,
+    loaded : {
+      type: Boolean,
+      default: false,
     },
   },
 
   data: () => ({
     headers: [
       { text: "Registro Acadêmico", value: "ra" },
-      { text: "Nome", value: "name" },
+      { text: "Nome", value: "nome" },
       { text: "CPF", value: "cpf" },
       { text: "Ações", value: "actions" },
     ],
