@@ -19,7 +19,7 @@ namespace OrbitaChallenge.Application.Queries.GetAllStudents
         }
         public async Task<GetAllStudentsQueryResult> Handle(GetAllStudentsQueryInput request, CancellationToken cancellationToken)
         {
-            var students = _context.Students.Select(x => new SharedStudentResponse(x)).ToList();
+            var students = await _context.Students.Select(x => new SharedStudentResponse(x)).ToListAsync();
 
             return new GetAllStudentsQueryResult()
             {
