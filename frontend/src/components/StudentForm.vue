@@ -1,5 +1,5 @@
 <template>
-<div style="width: -webkit-fill-available; margin: 20px">
+  <div style="width: -webkit-fill-available; margin: 20px">
     <v-form v-model="isFormValid">
       <v-text-field
         label="Nome"
@@ -18,7 +18,7 @@
         v-model="email"
       />
       <v-text-field
-        label="CPF"
+        label="CPF (somente dígitos)"
         :rules="cpfRules"
         append-icon="mdi-id-card"
         :disabled="!cpfEditable"
@@ -35,13 +35,21 @@
       />
     </v-form>
     <v-btn @click="$router.push(STUDENT_ROUTER())">Cancelar</v-btn>
-    <v-btn @click="method({email, cpf, ra, nome}).then(r => $router.push(STUDENT_ROUTER()))" :disabled="!isFormValid" >Salvar</v-btn>
+    <v-btn
+      @click="
+        method({ email, cpf, ra, nome }).then((r) => {
+          $router.push(STUDENT_ROUTER());
+        })
+      "
+      :disabled="!isFormValid"
+      >Salvar</v-btn
+    >
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import {STUDENT_ROUTER} from "@/router/routes";
+import { STUDENT_ROUTER } from "../router/routes";
 
 export default Vue.extend({
   name: "StudentForm",
@@ -80,7 +88,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    STUDENT_ROUTER
+    STUDENT_ROUTER,
   },
 
   data: () => ({
@@ -89,9 +97,7 @@ export default Vue.extend({
     ra: "",
     cpf: "",
     isFormValid: false,
-    nomeRules: [
-      (v: string) => !!v || "Este campo é obrigatório",
-    ],
+    nomeRules: [(v: string) => !!v || "Este campo é obrigatório"],
     emailRules: [
       (v: string) => !!v || "Este campo é obrigatório",
       //Regex: https://www.w3resource.com/javascript/form/email-validation.php
