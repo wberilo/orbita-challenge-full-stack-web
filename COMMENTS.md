@@ -96,6 +96,7 @@ Erros de bad request no Frontend podem ser interceptados através do `axios.inte
 - XUnit
 - Moq (Para fazer o mock utilizado nos testes)
 - EntityFrameworkCore.InMemory (Banco de dados temporário para execução de testes)
+- Pomelo.EntityFrameworkCore.MySql
 
 ## Frontend
 
