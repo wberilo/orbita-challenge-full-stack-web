@@ -1,17 +1,9 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using OrbitaChallenge.Domain.Architecture;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OrbitaChallenge.Domain.StudentAggregate
 {
-    public class Student : AuditableEntity
+    public class Student
     {
         public Student(string nome, string email, string rA, string cPF)
         {
