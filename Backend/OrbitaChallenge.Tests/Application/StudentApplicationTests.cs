@@ -92,7 +92,7 @@ namespace OrbitaChallenge.Tests
             //Arange
             context.Students.Add(new Student("carlos", "carlos@gmail.com", "1234", "11111111111"));
             context.Students.Add(new Student("pedro", "pedro@gmail.com", "1235", "11111111111"));
-            context.Students.Add(new Student("ricardo", "ricardo@gmail.com", "1236", "11111111111"));
+            context.Students.Add(new Student("break", "ricardo@gmail.com", "1236", "11111111111"));
             context.SaveChanges();
             GetAllStudentsQueryInput command = new();
             GetAllStudentsQueryHandler handler = new(context);
