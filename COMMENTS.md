@@ -108,7 +108,6 @@ Setup através da Vue CLI com router, store, vuex
 # O que você melhoraria se tivesse mais tempo
 
 - A validação com FluentValidation pode ser feita automaticamente através de middlewares, implementando `IPipelineBehavior<TRequest, TResponse>` do MediatR e não instanciando no controller
-- Implementar as colunas da classe `AuditableEntity` no banco com valores default `Datetime.Now` para automaticamente salvar a data de criação e alteração de entidades
 - O setup e teardown dos testes pode ser simplificado herdando de uma classe que implementa `IDisposable`
 - A pesquisa de alunos por nome poderia ser feita através de parâmetros de url no request get /students e não somente filtrada no front
 
