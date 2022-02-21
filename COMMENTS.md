@@ -87,6 +87,14 @@ Erros de bad request no Frontend podem ser interceptados através do `axios.inte
 ![Erro recebido do back](/mockups/erro_ra.png)
 ![Sucesso recebido do back](/mockups/criado_sucesso.png)
 
+## Fluxos de integração
+
+Foi criada uma github action para avaliar commits e pull requests com o objetivo verificar se os códigos a serem integrados na aplicação são funcionais. A action faz o build do ambiente dotnet e executa os testes localizados na camada de testes
+
+https://github.com/wberilo/orbita-challenge-full-stack-web/pull/2 exemplo de pull request com erros
+
+https://github.com/wberilo/orbita-challenge-full-stack-web/actions actions
+
 # Lista de bibliotecas de terceiros utilizadas (não indicadas no readme)
 
 ## Backend
