@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbitaChallenge.Domain", "O
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbitaChallenge.Infra", "OrbitaChallenge.Infra\OrbitaChallenge.Infra.csproj", "{4C6CC06F-6CBD-470E-B29B-AE80C9BE711F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbitaChallenge.API", "OrbitaChallenge.API\OrbitaChallenge.API.csproj", "{C0F3C6BF-10C0-4590-9967-DB34A444DB63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbitaChallenge.API", "OrbitaChallenge.API\OrbitaChallenge.API.csproj", "{C0F3C6BF-10C0-4590-9967-DB34A444DB63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbitaChallenge.Tests", "OrbitaChallenge.Tests\OrbitaChallenge.Tests.csproj", "{82B26C77-692E-4D61-B35D-3F2DF5CB8004}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C0F3C6BF-10C0-4590-9967-DB34A444DB63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0F3C6BF-10C0-4590-9967-DB34A444DB63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0F3C6BF-10C0-4590-9967-DB34A444DB63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82B26C77-692E-4D61-B35D-3F2DF5CB8004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82B26C77-692E-4D61-B35D-3F2DF5CB8004}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82B26C77-692E-4D61-B35D-3F2DF5CB8004}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82B26C77-692E-4D61-B35D-3F2DF5CB8004}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
