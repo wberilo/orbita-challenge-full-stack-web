@@ -1,6 +1,6 @@
 import { Student } from "@/util/SharedTypes/StudentType"
 
-export const STUDENT_ROUTE = "/students"
+export const STUDENT_ROUTE = "/"
 export const STUDENT_ROUTER = () => `${STUDENT_ROUTE}`
 
 export const REGISTER_STUDENT_ROUTE = `${STUDENT_ROUTE}/cadastrar`

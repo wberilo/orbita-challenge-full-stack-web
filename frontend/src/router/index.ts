@@ -7,11 +7,6 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
-    name: 'home',
-    component: CreateStudentView
-  },
-  {
     path: STUDENT_ROUTE,
     name: 'listar',
     component: () => import('../views/ListStudentView.vue')

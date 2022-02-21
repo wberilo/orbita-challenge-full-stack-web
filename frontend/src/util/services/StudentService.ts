@@ -5,7 +5,7 @@ const STUDENT_ROUTE = `${baseUrl}/students`
 
 export const getAllStudents = async ():Promise<[Student]> => {
   const response = await axios.get(STUDENT_ROUTE)
-  return response.data.items
+  return response.data.items.map((student: { cpf: string }) => ({...student, cpf:student.cpf.replace(/(.{3})(.{3})(.{3})(.{2})/, '$1.$2.$3-$4')}))
 }
 
 export const getStudentByRa = async (ra:string):Promise<Student> => {

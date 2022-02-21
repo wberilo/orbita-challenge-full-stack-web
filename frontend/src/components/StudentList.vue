@@ -10,7 +10,7 @@
     </v-btn>
     <v-data-table
       :headers="headers"
-      :items="students.map(student => ({...student, cpf:student.cpf.replace(/(.{3})(.{3})(.{3})(.{2})/, '$1.$2.$3-$4')}))"
+      :items="students"
       :items-per-page="5"
       :loading="!loaded"
       class="elevation-1"
