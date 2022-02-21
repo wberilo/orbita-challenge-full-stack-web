@@ -76,7 +76,8 @@ O frontend foi desenvolvido usando typescript para melhor expor e integrar as fu
 
 Rotas foram colocadas em um arquivo routes.ts para fácil mudança das rotas caso necessário
 
-Inputs são validados com rules de vue e vuefy
+Inputs são validados com rules de vue e vuetify
+
 ![Validação de inputs](/mockups/erro_validacao.png)
 
 Funções com requests para o backend são agregadas em arquivos de suas respectivas entidades em utils/services para fácils acesso e modificação (StudentService.ts)
