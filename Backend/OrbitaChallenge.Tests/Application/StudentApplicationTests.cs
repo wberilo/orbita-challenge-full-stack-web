@@ -38,6 +38,9 @@ namespace OrbitaChallenge.Tests
             var student = await context.Students.FirstOrDefaultAsync();
             //Asert
             Assert.Equal("carlos", student.Nome);
+            Assert.Equal("carlos@gmail.com", student.Email);
+            Assert.Equal("1234", student.RA);
+            Assert.Equal("11111111111", student.CPF);
 
             await ClearMemoryDb(context);
         }
@@ -69,15 +72,15 @@ namespace OrbitaChallenge.Tests
             //Arange
             context.Students.Add(new Student("carlos", "carlos@gmail.com", "1234", "11111111111"));
             context.SaveChanges();
-            UpdateStudentCommandInput command = new("pedro", "pedro@gmail.com", "1234");
+            UpdateStudentCommandInput command = new("ricardo", "ricardo@gmail.com", "1234");
             UpdateStudentCommandHandler handler = new(context);
             //Act
             await handler.Handle(command, new System.Threading.CancellationToken());
 
             var student = await context.Students.FirstOrDefaultAsync();
             //Asert
-            Assert.Equal("pedro", student.Nome);
-            Assert.Equal("pedro@gmail.com", student.Email);
+            Assert.Equal("ricardo", student.Nome);
+            Assert.Equal("ricardo@gmail.com", student.Email);
 
             await ClearMemoryDb(context);
         }
