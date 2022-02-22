@@ -95,6 +95,12 @@ https://github.com/wberilo/orbita-challenge-full-stack-web/pull/2 exemplo de pul
 
 https://github.com/wberilo/orbita-challenge-full-stack-web/actions actions
 
+Ao realizar um push ou commit na branch master, o código é automaticamente implementado no servidor remoto http://berilo.dev:3080 (não foi criado certificado ssl então faça uma requisição para o endereço http, navegarores redirecionam domínios .dev para https automaticamente)
+
+http://berilo.dev:3080/students
+![Servidor remoto](/mockups/servidor_remoto.png)
+
+
 # Lista de bibliotecas de terceiros utilizadas (não indicadas no readme)
 
 ## Backend
