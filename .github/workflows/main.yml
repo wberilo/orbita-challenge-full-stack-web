@@ -15,4 +15,6 @@ jobs:
           script: |
             cd ~/orbita-challenge-full-stack-web
             git pull
-            pm2 reload dotnet
+            cd ~/orbita-challenge-full-stack-web/Backend/OrbitaChallenge.API
+            pm2 delete dotnet
+            pm2 start "dotnet run" --name dotnet
