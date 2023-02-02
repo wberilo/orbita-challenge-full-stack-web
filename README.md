@@ -1,120 +1,128 @@
-GrupoA Educação - Full Stack Web Developer
-===================
+# Decisão da arquitetura utilizada
 
-[![N|Solid](https://www.grupoa.com.br/hs-fs/hubfs/logo-grupoa.png?width=300&name=logo-grupoa.png)](https://www.grupoa.com.br) 
+## Backend
 
-O objetivo deste desafio é avaliar as competências técnicas dos candidatos a desenvolvedor Full Stack Web na Maior Plataforma de Educação do Brasil, **Grupo A Educação**. 
+![Swagger do backend](/mockups/back_end.png)
 
-Será solicitado o desenvolvimento de uma Aplicação que realize a Matrícula do Aluno na Turma de Programação Web da instituição EdTech. Regras e requisitos técnicos estão detalhadas neste documento.
+Arquitetura dividida em 4 camadas (API, Application, Domain e Infra) para aumentar a modularidade, reduzir a complexidade e facilitar mudanças futuras na arquiterura
 
-# Especificações Técnicas
-- **Front End:** [Vuetifyjs](https://vuetifyjs.com/en/)  como framework de UI
-- **API:** .netCore, C# e Entity framework
-- **Banco de Dados:** Postgress ou MySQL
-- **Idioma de escrita do código:** Inglês
+#### API
+
+A camada API é o coração da aplicação onde executamos a executamos e expomos os controllers para fazer requisições
+
+Ao receber um request, validamos ele com a respectiva classe do FluentValidator, caso não esteja de acordo, retornamos 400BadRequest
+
+![Bad request no back](/mockups/erro_validacao_back.png)
+
+#### Application
+
+A camada de aplicação é onde ficam os handlers para os comandos recebidos da API
+
+Utilizamos a biblioteca MediatR para expor uma arquitetura consistindo de **Handlers**, **Inputs** e **Results** (ou DTO) para cada comando
+
+Cada comando da camada application tem uma classe **Input** esperada, que quando recebida pelo MediatR é mandada para um **Handler** que executa o comando e retorna um **Result** (Assim como o DTO, retornamos essa classe ao invés da classe do Domain para não retornar informações desnecessárias ou reservadas)
+
+Também declaramos aqui as classes de validação do FluentValidator para validação dos respectivos **Inputs**
+
+#### Domain
+
+A camada Domain é responsável por expor as entidades que vão ser usadas pelas camadas Domain e Application
+
+#### Infra
+
+A camada Infra expõe o EntityFramework para persistência de dados e guarda as migrations para mudanças no banco
+
+#### Tests
+
+Camada de testes usando XUnit, Moq, com um banco de dados EntityFrameworkCore.InMemory, foram criados testes para todos os Handlers da camada de Application
+
+### Endpoints
+
+#### Get /students
+
+Retorna todos os alunos.
+
+#### Post /students
+
+Cria um novo aluno
+
+O request é validado, caso não esteja de acordo, irá retornar 400BadRequest como resposta.
+
+#### Get /students/{RA}
+
+Recebe o Registro Acadêmico (unique key) como parâmetro e retorna o aluno.
+
+Caso não encontre o aluno, retorna 404NotFound como resposta.
+
+![Erro 404 not found no back](/mockups/erro_notfound_back.png)
+
+#### Put /students/{RA}
+
+Recebe o Registro Acadêmico (unique key) como parâmetro, email e nome como body
+
+Altera email e nome do aluno (os outros parâmetros são imutáveis)
+
+#### Delete /students/{RA}
+
+Deleta o aluno com o RA recebido como parâmetro
+
+## Frontend
+
+![Tela do frontend](/mockups/front_end.png)
+
+Os componentes foram separados nos arquivos views (telas) e components, views sendo responsáveis por fazer os requests para o backend e passar as responses para os components através de props.
+
+O frontend foi desenvolvido usando typescript para melhor expor e integrar as funções dos serviços
+
+Rotas foram colocadas em um arquivo routes.ts para fácil mudança das rotas caso necessário
+
+Inputs são validados com rules de vue e vuetify
+
+![Validação de inputs](/mockups/erro_validacao.png)
+
+Funções com requests para o backend são agregadas em arquivos de suas respectivas entidades em utils/services para fácils acesso e modificação (StudentService.ts)
+
+Erros de bad request no Frontend podem ser interceptados através do `axios.interceptors.request.use` e mostram um toast para o usuário em casos de bad request exibindo a mensagem personalizada de erro do FluentValidator através do vue-toastification
+
+![Erro recebido do back](/mockups/erro_ra.png)
+![Sucesso recebido do back](/mockups/criado_sucesso.png)
+
+## Fluxos de integração
+
+Foi criada uma github action para avaliar commits e pull requests com o objetivo verificar se os códigos a serem integrados na aplicação são funcionais. A action faz o build do ambiente dotnet e executa os testes localizados na camada de testes.
+
+https://github.com/wberilo/orbita-challenge-full-stack-web/pull/2 exemplo de pull request com erros
+
+https://github.com/wberilo/orbita-challenge-full-stack-web/actions actions
+
+Ao realizar um push ou commit na branch master, o código é automaticamente implementado no servidor remoto http://berilo.dev:3080 (não foi criado certificado ssl então faça uma requisição para o endereço http, navegarores redirecionam domínios .dev para https automaticamente)
+
+http://berilo.dev:3080/students
+![Servidor remoto](/mockups/servidor_remoto.png)
 
 
-# Requisitos
-## Contextualização
-Considere que uma Instituição de Ensino Superior precisa de uma solução para cadastrar e gerenciar matrículas de usuários em turmas online. Para realizar a matrícula, é necessário que o cadastro de aluno tenha sido realizado.
+# Lista de bibliotecas de terceiros utilizadas (não indicadas no readme)
 
-O desafio consiste em criar uma aplicação para o cadastro de usuários conforme os critérios de aceitação.
+## Backend
 
-## Mockups de interface
-Abaixo alguns mockoups de interface como um guia para a criação do front-end. Fique à vontade para usar sua criatividade e melhorias na criação do front-end.
+- FluentValidation
+- MediatR
+- XUnit
+- Moq (Para fazer o mock utilizado nos testes)
+- EntityFrameworkCore.InMemory (Banco de dados temporário para execução de testes)
+- Pomelo.EntityFrameworkCore.MySql
 
-* Listagem de Alunos
-![Listagem de Alunos](/mockups/studants_list.png)
+## Frontend
 
-* Criar/Editar Aluno
-![Listagem de Alunos](/mockups/studants_save.png)
+Setup através da Vue CLI com router, store, vuex
 
-## Histórias do Usuário
-- **Sendo** um usuário administrativo da Instituição
-- **Quero** gerenciar cadastros de alunos
-- **Para** que eu possa realizar a matrícula do aluno
+- Typescript
+- Axios
+- Axios-vue
+- vue-toastification
 
-### Critérios de aceite: 
+# O que você melhoraria se tivesse mais tempo
 
-#### Cenário: cadastrar novo aluno
-- **Dado** que estou na tela de Consulta de Alunos
-- **Quando** clico em Cadastrar Aluno
-- **Então** abre a tela de Cadastro do Aluno
-- **E** exibe os campos obrigatórios vazios
-####
-- **Dado** que inseri dados válidos nos campos
-- **Quando** clico em Salvar
-- **Então** cria o novo aluno na base
-- **E** retorna mensagem de sucesso
-####
-- **Dado** que inseri dados válidos nos campos
-- **Quando** clico em Cancelar
-- **Então** retorna para tela Consulta de Alunos
-- **E** não persiste a gravação dos dados no banco 
-
-#### Cenário: listar alunos cadastrados 
-- **Dado** que estou no Módulo Acadêmico
-- **Quando** clico no menu Alunos
-- **Então** abre a tela de Consulta de Alunos 
-- **E** exibe opção Cadastrar Aluno ao topo
-- **E** lista dados dos alunos cadastrados
-- **E** exibe opção Editar por aluno
-- **E** exibe opção Excluir por aluno
-
-#### Cenário editar cadastro de aluno
-- **Dado** que estou na listagem de alunos
-- **Quando** clico em Editar aluno
-- **Então** abre a tela de Cadastro do Aluno 
-- **E** exibe os campos do cadastro preenchidos
-- **E** habilita alteração dos campos editáveis
-####
-- **Dado** que estou na tela de Cadastro do Aluno
-- **Quando** clica em Salvar
-- **Então** grava os dados editáveis na base
-####
-- **Dado** que estou na tela de Cadastro do Aluno
-- **Quando** clica em Cancelar
-- **Então** retorna para a tela de Consulta de Alunos
-- **E** não persiste a gravação dos dados
-
-#### Cenário: excluir cadastro de aluno
-- **Dado** que estou na listagem de alunos
-- **Quando** clico em Excluir aluno
-- **Então** exibe a modal de confirmação de exclusão
-####
-- **Dado** que estou na modal de confirmação de exclusão 
-- **Quando** clico em Confirmar
-- **Então** então exclui o registro do aluno
-####
-- **Dado** que estou na modal de confirmação de exclusão
-- **Quando** clico em Cancelar
-- **Então** então fecha a modal e não persiste a exclusão
-
-## Campos obrigatórios:
-- **Nome** (editável)
-- **Email** (editável)
-- **RA** (não editável) (chave única)
-- **CPF** (não editável)
-
-# Desejável
-- Testes unitários
-- Documentação da arquitetura de solução
-
-# Critérios de avaliação
-- Qualidade de escrita do código
-- Organização do projeto
-- Qualidade da API
-- Lógica da solução implementada
-- Qualidade da camada de persistência
-- Utilização do Git (quantidade e descrição dos commits, Git Flow, ...)
-
-# Instruções de entrega
-1. Crie um fork do repositório no seu GitHub
-2. Faça o push do código desenvolvido no seu Github
-3. Inclua um arquivo chamado COMMENTS.md explicando
-- Decisão da arquitetura utilizada
-- Lista de bibliotecas de terceiros utilizadas
-- O que você melhoraria se tivesse mais tempo
-- Quais requisitos obrigatórios que não foram entregues
-4. Informe ao recrutador quando concluir o desafio junto com o link do repositório
-5. Após revisão do projeto junto com a equipe de desevolvimento deixe seu repositório privado
+- A validação com FluentValidation pode ser feita automaticamente através de middlewares, implementando `IPipelineBehavior<TRequest, TResponse>` do MediatR e não instanciando no controller
+- O setup e teardown dos testes pode ser simplificado herdando de uma classe que implementa `IDisposable`
+- A pesquisa de alunos por nome poderia ser feita através de parâmetros de url no request get /students e não somente filtrada no front
