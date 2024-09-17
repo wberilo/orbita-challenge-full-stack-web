@@ -123,7 +123,7 @@ namespace OrbitaChallenge.Tests
             Assert.Equal("pedro", response.Nome);
             Assert.Equal("pedro@gmail.com", response.Email);
             Assert.Equal("1235", response.RA);
-            Assert.Equal("11111111112", response.CPF);
+            Assert.Equal("5", response.CPF);
 
             await ClearMemoryDb(context);
         }
